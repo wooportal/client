@@ -3,6 +3,8 @@
 mat-card
   @include position(relative)
   width: 20rem
+  height: 176px
+
 
   @include deep
     & > .mat-ripple-element
@@ -19,14 +21,21 @@ mat-card
     z-index: 1
 
   & > mat-card-content
-    & > fa-icon
-      float: right
-      font-size: 4rem
+    flex: 1 1 auto
 
   & > mat-card-header
-    @include flex(column)
-    height: 5rem
+    display: flex
+    flex-direction: row
+    height: 68px
+
+    & > fa-icon
+      position: static
+      margin-left: auto
+      padding: 10px
+      height: 1rem
+      background: rgba(55,64,80,0.7)
+      border-radius: 28px
 
     @include deep
       & > .mat-card-header-text
-        margin: auto 0 0 0 !important
+        margin: 0 0 0 0 !important
