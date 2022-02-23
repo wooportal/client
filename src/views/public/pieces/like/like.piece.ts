@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { IconPrefix } from '@fortawesome/fontawesome-svg-core';
 import { Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../../../api/models/string-primitive';
 import { BaseService, Box, CrudModel, CrudProvider, SessionProvider } from '../../../../core';
@@ -11,11 +12,8 @@ import { BasePiece } from '../base.piece';
 })
 
 export class LikePieceComponent
-  extends BasePiece {
-
-  public get liked(): boolean {
-    return this.sessionProvider.getLiked(this.item.id);
-  }
+  extends BasePiece implements OnInit {
+    icon: IconPrefix = 'far';
 
   public constructor(
     private sessionProvider: SessionProvider
@@ -23,12 +21,20 @@ export class LikePieceComponent
     super();
   }
 
+  ngOnInit(): void {
+    this.iconChange(this.sessionProvider.getLiked(this.item.id));
+  }
+
+  public iconChange(value: boolean): void { 
+    this.icon = value ? 'fas' : 'far';
+  }
+
   public like(): void {
     const provider = (this.item.constructor as any)
       .provider as CrudProvider<BaseService, CrudModel>
         & { like: (id: string, subId?: String) => Observable<any> };
-
     if (provider.like) {
+      this.iconChange(!this.sessionProvider.getLiked(this.item.id));
       const subId = this.sessionProvider.getSubscriptionId()
         ? Box(this.sessionProvider.getSubscriptionId())
         : undefined;

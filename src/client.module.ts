@@ -10,6 +10,7 @@ import { ServiceWorkerModule, SwRegistrationOptions } from '@angular/service-wor
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 import { ClientComponent } from './client.component';
 import { ClientRouter } from './client.router';
@@ -63,7 +64,7 @@ export class ClientModule {
   public constructor(
     iconLibrary: FaIconLibrary
   ) {
-    iconLibrary.addIconPacks(fab, fas);
+    iconLibrary.addIconPacks(fab, fas, far);
   }
 
 }

@@ -1,6 +1,7 @@
 @import ~normalize.css/normalize.css
 @import ~@fortawesome/fontawesome-svg-core/styles
 @import brand.scss
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap')
 
 @include mat-core()
 @include angular-material-theme($theme-palette)
@@ -10,6 +11,9 @@
 //
 *
   -webkit-tap-highlight-color: transparent
+
+body
+  font-family: 'Roboto', sans-serif
 
 //
 // TOOLBARS
@@ -264,6 +268,7 @@ shared-component
       @include position(absolute, 0, 0, 0, 0)
       display: flex !important
       position: absolute !important
+      background: #F9F6FF
 
       & > mat-progress-bar
         position: fixed !important

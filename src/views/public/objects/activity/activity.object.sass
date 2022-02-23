@@ -1,42 +1,152 @@
 @import ../../../brand.scss
 
 main
-  & > section
-    & > aside
-      & > mat-expansion-panel
-        &.column
-          @include flex(column)
-
-        iframe
-          border: 0
-          border-radius: .25rem
-          height: 20rem
-          margin: 1rem
-          width: 100%
-
-        section
-          width: 100%
-
-          & > aside
-            padding: 1rem
-            text-align: center
-
-            & > i18n
-              display: block
-              font-weight: bold
-
-          & > mat-calendar
+  padding: 0
+  @media (min-width: 600px)
+    width: 50%
+  .info-container
+    background: #FFFFFF
+    border-radius: 8px
+    @media (min-width: 600px)
+      margin-top: 2%
+    .mobile-header
+      margin: 0
+      background: #F9F6FF
+      color: #F37964
+      padding: 15px
+      font-weight: 900
+      font-size: 24px
+      line-height: 28px
+      letter-spacing: 0.06em
+      @media (min-width: 600px)
+        display: none
+    .image-container
+      display: flex
+      position: relative
+      width: 100%
+      height: 120px
+      @media (min-width: 600px)
+        height: 300px
+      .like-piece
+        @media (min-width: 600px)
+          display: none
+      & > img
+        width: 100%
+        height: 120px
+        @media (min-width: 600px)
+          border-radius: 8px
+          height: 300px
+          padding: 5px
+    .info-header
+      font-weight: 500
+      font-size: 18px
+      font-size: 18px
+      line-height: 16px
+      letter-spacing: -0.02em
+      color: #F37964
+      padding-left: 10px
+      padding-right: 10px
+      .mobile-info
+        @media (min-width: 600px)
+          display: none
+      .browser-info
+        display: none
+        @media (min-width: 600px)
+          display: block
+          padding: 0 15px 0
+          .category
             width: 100%
+            justify-content: space-between
+            display: flex
+            padding-right: 0
+            .interactions
+              font-size: 14px
+              .mat-datepicker-toggle
+                color: #F37964
+          .time-cost
+            display: flex
+            width: 100%
+            justify-content: space-between
+            font-size: 14px
 
-            @include deep
-              .mat-calendar-body-cell:not(.mat-calendar-body-disabled)
-                & > .mat-calendar-body-cell-content
-                  background-color: $color-primary !important
-                  color: $color-lightest !important
-                  font-weight: bold
-
-              .mat-calendar-header
-                padding: 0 1rem
-
-          & > mat-divider
-            margin: 0 1rem
+      .category-title
+        @media (min-width: 600px)
+          color: #624DAC
+          font-weight: 900
+          letter-spacing: 0.08em
+          font-size: 26px
+          padding: 15px 20px 10px
+      .informations
+        display: flex
+        margin-bottom: 20px
+        .time
+          width: 45%
+          color: #624DAC
+        .entry
+          width: 55%
+          text-align: right
+          padding-top: 5px
+      .mat-chip-list
+        display: flex
+        justify-content: center
+        align-items: center
+        .first-keyword
+          background-color: transparent
+          color: #6DA4D8
+          border: 1px solid #6DA4D8
+        .second-keyword
+          background-color: transparent
+          color: #EEA753
+          border: 1px solid #EEA753
+        .mat-standard-chip
+          min-height: 25px
+          @media (min-width: 600px)
+            min-height: 20px
+            font-size: 14px
+    & > section
+      background: #F9F6FF
+      color: #624DAC
+      padding: 15px
+      margin-top: 10px
+      @media (min-width: 600px)
+        background: transparent
+      .content-title
+        font-weight: bold
+        font-size: 16px
+        line-height: 24px
+      & > article
+        font-size: 12px
+  .event
+    background: #ffffff
+    border-radius: 8px
+    color: #624DAC
+    .title
+      font-size: 20px
+      font-weight: 900
+      letter-spacing: 0.06em
+      padding: 10px
+      margin-bottom: 10px
+    .info
+      display: flex
+      padding-bottom: 10px
+      .image
+        padding-right: 30px
+        padding-left: 10px
+        img
+          width: 120px
+          height: 120px
+          border-radius: 50%
+      .content
+        .name
+          font-size: 16px
+          font-weight: 500
+          line-height: 20px
+          margin-bottom: 5px
+        .text
+          color: #978FB3
+          font-size: 14px
+          font-weight: normal
+          .icon
+            color: #F37964
+            font-size: 16px
+            padding-right: 5px
