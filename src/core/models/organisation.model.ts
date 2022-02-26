@@ -32,6 +32,8 @@ export class OrganisationModel
   public memberships: MembershipModel[] & Observable<MembershipModel[]>;
   public users: UserModel[] & Observable<UserModel[]>;
   public videos: VideoModel[] & Observable<VideoModel[]>;
+  public visitors: number & Observable<number>;
+  public visits: number & Observable<number>;
 
   // compatability
   public get avatar() { return this.image; }

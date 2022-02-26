@@ -1,18 +1,18 @@
 /* tslint:disable */
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService as __BaseService } from '../base-service';
-import { ApiConfiguration as __Configuration } from '../api-configuration';
-import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
 import { Observable as __Observable } from 'rxjs';
-import { map as __map, filter as __filter } from 'rxjs/operators';
-
+import { filter as __filter, map as __map } from 'rxjs/operators';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { BaseService as __BaseService } from '../base-service';
+import { BooleanPrimitive } from '../models/boolean-primitive';
+import { ImageEntity } from '../models/image-entity';
 import { OrganisationEntity } from '../models/organisation-entity';
 import { ResourceOrganisationEntity } from '../models/resource-organisation-entity';
 import { StringPrimitive } from '../models/string-primitive';
-import { BooleanPrimitive } from '../models/boolean-primitive';
-import { ImageEntity } from '../models/image-entity';
 import { VideoEntity } from '../models/video-entity';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+
 
 /**
  * Organisation Controller
@@ -1302,4 +1302,5 @@ module OrganisationControllerService {
   }
 }
 
-export { OrganisationControllerService }
+export { OrganisationControllerService };
+

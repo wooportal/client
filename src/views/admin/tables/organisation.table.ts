@@ -22,6 +22,12 @@ import { BaseTable, TableColumn } from '../base/base.table';
         <ng-container *ngSwitchCase="'website'">
           <i18n>website</i18n>
         </ng-container>
+        <ng-container *ngSwitchCase="'visitors'">
+          <i18n>visitors</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'visits'">
+          <i18n>visits</i18n>
+        </ng-container>
       </ng-container>
     </ng-template>
   `)
@@ -58,11 +64,25 @@ export class OrganisationTableComponent
     {
       name: 'address',
       value: (item) => item.address.label
+    },
+    {
+      name: 'visitors',
+      value: (item) =>
+      {
+        console.log(item.visitors);
+        return item.visitors;
+      }
+    },
+    {
+      name: 'visits',
+      value: (item) => item.visits
     }
   ];
 
   protected joiner: CrudJoiner = CrudJoiner.of(OrganisationModel)
-    .with('address').yield('suburb');
+    .with('address').yield('suburb')
+    .with('visitors')
+    .with('visits');
 
   protected model: Type<OrganisationModel> = OrganisationModel;
 

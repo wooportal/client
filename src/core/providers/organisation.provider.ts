@@ -9,7 +9,7 @@ import { AddressModel } from '../models/address.model';
 import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
 import { MembershipModel } from '../models/membership.model';
-import { OrganisationModel as Model } from '../models/organisation.model';
+import { OrganisationModel as Model, OrganisationModel } from '../models/organisation.model';
 import { UserModel } from '../models/user.model';
 import { VideoModel } from '../models/video.model';
 
@@ -75,6 +75,16 @@ export class OrganisationProvider
       field: 'videos',
       method: this.service.organisationControllerReadVideosResponse,
       model: VideoModel
+    },
+    {
+      field: 'visits',
+      method: this.service.organisationControllerCalculateOverviewVisitsResponse,
+      model: OrganisationModel
+    },
+    {
+      field: 'visitors',
+      method: this.service.organisationControllerCalculateOverviewVisitorsResponse,
+      model: OrganisationModel
     }
   ];
 
