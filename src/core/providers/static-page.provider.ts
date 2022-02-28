@@ -1,29 +1,28 @@
 import { Injectable, Type } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { StringPrimitive as String } from '../../api/models/string-primitive';
-import { PageControllerService as Service } from '../../api/services/page-controller.service';
+import { MarkupControllerService as Service } from '../../api/services/markup-controller.service';
 import { CrudLink, CrudMethods, CrudProvider } from '../crud/crud.provider';
-import { InfopageModel as Model } from '../models/infopage.model';
+import { ImageModel } from '../models/image.model';
 import { LanguageModel } from '../models/language.model';
-import { TopicModel } from '../models/topic.model';
+import { StaticPageModel as Model } from '../models/static-page.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class InfopageProvider
+export class StaticPageProvider
   extends CrudProvider<Service, Model> {
 
   protected linked: CrudLink[] = [
     {
+      field: 'image',
+      method: this.service.markupControllerReadImageResponse,
+      model: ImageModel
+    },
+    {
       field: 'language',
       method: () => EMPTY,
       model: LanguageModel
-    },
-    {
-      field: 'topic',
-      method: this.service.pageControllerReadTopicResponse,
-      model: TopicModel
     },
     {
       field: 'translatables',
@@ -32,17 +31,17 @@ export class InfopageProvider
     },
     {
       field: 'translations',
-      method: this.service.pageControllerReadTranslationsResponse,
+      method: this.service.markupControllerReadTranslationsResponse,
       model: Model
     }
   ];
 
   protected methods: CrudMethods = {
-    create: this.service.pageControllerCreateResponse,
-    delete: this.service.pageControllerDeleteResponse,
-    readAll: this.service.pageControllerReadAllResponse,
-    readOne: this.service.pageControllerReadOneResponse,
-    update: this.service.pageControllerUpdateResponse
+    create: this.service.markupControllerCreateResponse,
+    delete: this.service.markupControllerDeleteResponse,
+    readAll: this.service.markupControllerReadAllResponse,
+    readOne: this.service.markupControllerReadOneResponse,
+    update: this.service.markupControllerUpdateResponse
   };
 
   protected model: Type<Model> = this.based(Model);
@@ -61,15 +60,15 @@ export class InfopageProvider
 
   public readOne: (id: string) => Observable<Model>;
 
-  public readAll: (params?: Service.PageControllerReadAllParams) =>
+  public readAll: (params?: Service.MarkupControllerReadAllParams) =>
     Observable<Model[]>;
 
-  public like: (id: string, subscriptionId?: String) =>
+  public analyticsVisitorsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .pageControllerIncreaseLikeResponse);
+      .markupControllerCalculateVisitorsResponse);
 
-  public relinkTopic: (id: string, topicId: String) =>
+  public analyticsVisitsOne: (id: string) =>
     Observable<any> = this.apply(this.service
-      .pageControllerUpdateTopicResponse);
+      .markupControllerCalculateVisitsResponse);
 
 }

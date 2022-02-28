@@ -4,8 +4,10 @@ import { CrudModel } from '../crud/crud.model';
 import { ActivityModel } from './activity.model';
 import { BloggerModel } from './blogger.model';
 import { BlogpostModel } from './blogpost.model';
+import { ImageModel } from './image.model';
 import { MembershipModel } from './membership.model';
 import { OrganisationModel } from './organisation.model';
+
 
 export class UserModel
   extends CrudModel
@@ -21,6 +23,7 @@ export class UserModel
   public username: string;
 
   public activities: ActivityModel[] & Observable<ActivityModel[]>;
+  public avatar: ImageModel & Observable<ImageModel>;
   public blogger: BloggerModel & Observable<BloggerModel>;
   public blogposts: BlogpostModel[] & Observable<BlogpostModel[]>;
   public membership: MembershipModel & Observable<MembershipModel>;

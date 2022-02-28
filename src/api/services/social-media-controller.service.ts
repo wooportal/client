@@ -7,22 +7,21 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { TagEntity } from '../models/tag-entity';
-import { ResourceTagEntity } from '../models/resource-tag-entity';
+import { SocialMediaEntity } from '../models/social-media-entity';
+import { ResourceSocialMediaEntity } from '../models/resource-social-media-entity';
 
 /**
- * Tag Controller
+ * Social Media Controller
  */
 @Injectable({
   providedIn: 'root',
 })
-class TagControllerService extends __BaseService {
-  static readonly tagControllerReadAllPath = '/tags';
-  static readonly tagControllerCreatePath = '/tags';
-  static readonly tagControllerReadOnePath = '/tags/{tagId}';
-  static readonly tagControllerUpdatePath = '/tags/{tagId}';
-  static readonly tagControllerDeletePath = '/tags/{tagId}';
-  static readonly tagControllerReadTranslationsPath = '/tags/{tagId}/translations';
+class SocialMediaControllerService extends __BaseService {
+  static readonly socialMediaControllerReadAllPath = '/socialmedia';
+  static readonly socialMediaControllerCreatePath = '/socialmedia';
+  static readonly socialMediaControllerReadOnePath = '/socialmedia/{socialmediaId}';
+  static readonly socialMediaControllerUpdatePath = '/socialmedia/{socialmediaId}';
+  static readonly socialMediaControllerDeletePath = '/socialmedia/{socialmediaId}';
 
   constructor(
     config: __Configuration,
@@ -33,7 +32,7 @@ class TagControllerService extends __BaseService {
 
   /**
    * readAll
-   * @param params The `TagControllerService.TagControllerReadAllParams` containing the following parameters:
+   * @param params The `SocialMediaControllerService.SocialMediaControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
@@ -49,7 +48,7 @@ class TagControllerService extends __BaseService {
    *
    * @return OK
    */
-  tagControllerReadAllResponse(params: TagControllerService.TagControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
+  socialMediaControllerReadAllResponse(params: SocialMediaControllerService.SocialMediaControllerReadAllParams): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -61,7 +60,7 @@ class TagControllerService extends __BaseService {
     if (params.filter != null) __params = __params.set('filter', params.filter.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/tags`,
+      this.rootUrl + `/socialmedia`,
       __body,
       {
         headers: __headers,
@@ -78,7 +77,7 @@ class TagControllerService extends __BaseService {
   }
   /**
    * readAll
-   * @param params The `TagControllerService.TagControllerReadAllParams` containing the following parameters:
+   * @param params The `SocialMediaControllerService.SocialMediaControllerReadAllParams` containing the following parameters:
    *
    * - `sort`:
    *
@@ -94,25 +93,25 @@ class TagControllerService extends __BaseService {
    *
    * @return OK
    */
-  tagControllerReadAll(params: TagControllerService.TagControllerReadAllParams): __Observable<{}> {
-    return this.tagControllerReadAllResponse(params).pipe(
+  socialMediaControllerReadAll(params: SocialMediaControllerService.SocialMediaControllerReadAllParams): __Observable<{}> {
+    return this.socialMediaControllerReadAllResponse(params).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * create
-   * @param newTag newTag
+   * @param newSocialMedia newSocialMedia
    * @return OK
    */
-  tagControllerCreateResponse(newTag: TagEntity): __Observable<__StrictHttpResponse<{}>> {
+  socialMediaControllerCreateResponse(newSocialMedia: SocialMediaEntity): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = newTag;
+    __body = newSocialMedia;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/tags`,
+      this.rootUrl + `/socialmedia`,
       __body,
       {
         headers: __headers,
@@ -129,28 +128,28 @@ class TagControllerService extends __BaseService {
   }
   /**
    * create
-   * @param newTag newTag
+   * @param newSocialMedia newSocialMedia
    * @return OK
    */
-  tagControllerCreate(newTag: TagEntity): __Observable<{}> {
-    return this.tagControllerCreateResponse(newTag).pipe(
+  socialMediaControllerCreate(newSocialMedia: SocialMediaEntity): __Observable<{}> {
+    return this.socialMediaControllerCreateResponse(newSocialMedia).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * readOne
-   * @param tagId tagId
+   * @param socialmediaId socialmediaId
    * @return OK
    */
-  tagControllerReadOneResponse(tagId: string): __Observable<__StrictHttpResponse<ResourceTagEntity>> {
+  socialMediaControllerReadOneResponse(socialmediaId: string): __Observable<__StrictHttpResponse<ResourceSocialMediaEntity>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}`,
+      this.rootUrl + `/socialmedia/${encodeURIComponent(String(socialmediaId))}`,
       __body,
       {
         headers: __headers,
@@ -161,37 +160,37 @@ class TagControllerService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<ResourceTagEntity>;
+        return _r as __StrictHttpResponse<ResourceSocialMediaEntity>;
       })
     );
   }
   /**
    * readOne
-   * @param tagId tagId
+   * @param socialmediaId socialmediaId
    * @return OK
    */
-  tagControllerReadOne(tagId: string): __Observable<ResourceTagEntity> {
-    return this.tagControllerReadOneResponse(tagId).pipe(
-      __map(_r => _r.body as ResourceTagEntity)
+  socialMediaControllerReadOne(socialmediaId: string): __Observable<ResourceSocialMediaEntity> {
+    return this.socialMediaControllerReadOneResponse(socialmediaId).pipe(
+      __map(_r => _r.body as ResourceSocialMediaEntity)
     );
   }
 
   /**
    * update
-   * @param newTag newTag
-   * @param tagId tagId
+   * @param newSocialMedia newSocialMedia
+   * @param socialmediaId socialmediaId
    * @return OK
    */
-  tagControllerUpdateResponse(newTag: TagEntity,
-    tagId: string): __Observable<__StrictHttpResponse<{}>> {
+  socialMediaControllerUpdateResponse(newSocialMedia: SocialMediaEntity,
+    socialmediaId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = newTag;
+    __body = newSocialMedia;
 
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}`,
+      this.rootUrl + `/socialmedia/${encodeURIComponent(String(socialmediaId))}`,
       __body,
       {
         headers: __headers,
@@ -208,30 +207,30 @@ class TagControllerService extends __BaseService {
   }
   /**
    * update
-   * @param newTag newTag
-   * @param tagId tagId
+   * @param newSocialMedia newSocialMedia
+   * @param socialmediaId socialmediaId
    * @return OK
    */
-  tagControllerUpdate(newTag: TagEntity,
-    tagId: string): __Observable<{}> {
-    return this.tagControllerUpdateResponse(newTag, tagId).pipe(
+  socialMediaControllerUpdate(newSocialMedia: SocialMediaEntity,
+    socialmediaId: string): __Observable<{}> {
+    return this.socialMediaControllerUpdateResponse(newSocialMedia, socialmediaId).pipe(
       __map(_r => _r.body as {})
     );
   }
 
   /**
    * delete
-   * @param tagId tagId
+   * @param socialmediaId socialmediaId
    * @return OK
    */
-  tagControllerDeleteResponse(tagId: string): __Observable<__StrictHttpResponse<{}>> {
+  socialMediaControllerDeleteResponse(socialmediaId: string): __Observable<__StrictHttpResponse<{}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}`,
+      this.rootUrl + `/socialmedia/${encodeURIComponent(String(socialmediaId))}`,
       __body,
       {
         headers: __headers,
@@ -248,60 +247,22 @@ class TagControllerService extends __BaseService {
   }
   /**
    * delete
-   * @param tagId tagId
+   * @param socialmediaId socialmediaId
    * @return OK
    */
-  tagControllerDelete(tagId: string): __Observable<{}> {
-    return this.tagControllerDeleteResponse(tagId).pipe(
-      __map(_r => _r.body as {})
-    );
-  }
-
-  /**
-   * readTranslations
-   * @param tagId tagId
-   * @return OK
-   */
-  tagControllerReadTranslationsResponse(tagId: string): __Observable<__StrictHttpResponse<{}>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/tags/${encodeURIComponent(String(tagId))}/translations`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<{}>;
-      })
-    );
-  }
-  /**
-   * readTranslations
-   * @param tagId tagId
-   * @return OK
-   */
-  tagControllerReadTranslations(tagId: string): __Observable<{}> {
-    return this.tagControllerReadTranslationsResponse(tagId).pipe(
+  socialMediaControllerDelete(socialmediaId: string): __Observable<{}> {
+    return this.socialMediaControllerDeleteResponse(socialmediaId).pipe(
       __map(_r => _r.body as {})
     );
   }
 }
 
-module TagControllerService {
+module SocialMediaControllerService {
 
   /**
-   * Parameters for tagControllerReadAll
+   * Parameters for socialMediaControllerReadAll
    */
-  export interface TagControllerReadAllParams {
+  export interface SocialMediaControllerReadAllParams {
     sort?: string;
     dir?: string;
     embeddings?: string;
@@ -311,4 +272,4 @@ module TagControllerService {
   }
 }
 
-export { TagControllerService }
+export { SocialMediaControllerService }

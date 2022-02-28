@@ -1,9 +1,10 @@
 /* tslint:disable */
-export interface TagEntity {
+export interface SocialMediaEntity {
   _embedded?: {};
   created?: string;
-  description?: string;
+  icon?: string;
   id?: string;
   modified?: string;
   name?: string;
+  url?: string;
 }

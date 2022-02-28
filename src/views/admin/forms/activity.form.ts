@@ -3,10 +3,9 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { ActivityModel, ActivityProvider, Box, CategoryModel, CoreSettings, KeywordModel, OrganisationModel, TargetGroupModel, TokenProvider, TranslationProvider, UserProvider } from '../../../core';
+import { ActivityModel, ActivityProvider, Box, CategoryModel, CoreSettings, OrganisationModel, TargetGroupModel, TokenProvider, TranslationProvider, UserProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { BaseTests } from '../base/base.tests';
-import { ChipListFieldComponent } from '../fields/chip-list.field';
 import { EditorFieldComponent } from '../fields/editor.field';
 import { InputFieldComponent } from '../fields/input.field';
 import { SelectFieldComponent } from '../fields/select.field';
@@ -56,11 +55,11 @@ import { SelectFieldComponent } from '../fields/select.field';
         <ng-container *ngSwitchCase="'phone'">
           <i18n>phone</i18n><sup>#</sup>
         </ng-container>
-        <ng-container *ngSwitchCase="'tags'">
-          <i18n>keywords</i18n>
-        </ng-container>
         <ng-container *ngSwitchCase="'targetGroups'">
           <i18n>targetGroups</i18n>
+        </ng-container>
+        <ng-container *ngSwitchCase="'admissionFee'">
+          <i18n>admissionFee</i18n>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -122,10 +121,11 @@ export class ActivityFormComponent
       multi: true
     },
     {
-      name: 'tags',
-      input: ChipListFieldComponent,
-      label: 'name',
-      model: KeywordModel
+      name: 'admissionFee',
+      input: InputFieldComponent,
+      tests: [Validators.pattern(/^([1-9]\d*|0)(\.\d+)?$/)],
+      label: 'admissionFee',
+      type: 'number'
     }
   ];
 
@@ -196,12 +196,6 @@ export class ActivityFormComponent
       .pasteSchedules(item.id, schedules.add)); }
     if (schedules.del.length) { links.push(this.activityProvider
       .unlinkSchedules(item.id, schedules.del.map((i) => i.id))); }
-
-    const tags = this.updated('tags');
-    if (tags.add.length) { links.push(this.activityProvider
-      .pasteKeywords(item.id, tags.add)); }
-    if (tags.del.length) { links.push(this.activityProvider
-      .unlinkKeywords(item.id, tags.del.map((i) => i.id))); }
 
     const targetGroups = this.updated('targetGroups');
     if (targetGroups.add.length) { links.push(this.activityProvider

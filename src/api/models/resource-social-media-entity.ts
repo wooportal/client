@@ -1,13 +1,12 @@
 /* tslint:disable */
 import { Link } from './link';
-export interface ResourcePageEntity {
+export interface ResourceSocialMediaEntity {
   _embedded?: {};
   _links?: Array<Link>;
-  content?: string;
   created?: string;
+  icon?: string;
   id?: string;
-  likes?: number;
   modified?: string;
-  title?: string;
-  topicId?: string;
+  name?: string;
+  url?: string;
 }
