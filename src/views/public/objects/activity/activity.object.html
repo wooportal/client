@@ -4,20 +4,11 @@
       {{ item.label }}
     </h1>
     <div class="image-container">
-      <like-piece class="like-piece" [item]="item"></like-piece>
-      <img src="images/soccer-ball-on-field.jpg" alt="Cover image">
-      <!-- <div *ngIf="item.images">
+      <like-piece class="like-piece" [item]="item" styleDisplay="block"></like-piece>
+      <div *ngIf="item.images">
         <img [src]="item.images[0]" alt="Cover image">
-      </div> -->
+      </div>
     </div>
-    <!-- <nav>
-      <follow-piece [item]="item"></follow-piece>
-      <share-piece [item]="item"></share-piece>
-      <like-piece [item]="item"></like-piece>
-      <span [style.flexGrow]="1"></span>
-      <time-piece [item]="item"></time-piece>
-    </nav> -->
-    <!-- <mat-divider></mat-divider> -->
     <div class="info-header">
       <p class="category-title">{{ item.category.name }}</p>
       <div class="mobile-info">
@@ -51,7 +42,7 @@
                 <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
               </mat-datepicker-actions>
             </mat-datepicker>
-            <like-piece [item]="item"></like-piece>
+            <like-piece [item]="item" styleDisplay="inline"></like-piece>
             <share-piece [item]="item"></share-piece>
           </div>
         </div>
@@ -71,176 +62,6 @@
           {{ item.address.place }} {{ item.address.suburb.label }}
       </h4>
       <article [innerHTML]="item.description"></article>
-      <aside style="display: none;">
-        <mat-expansion-panel #details (opened)="expanded(details)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <fa-icon icon="map-marker-alt"></fa-icon>
-              <i18n>details</i18n>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <table>
-            <tr>
-              <td [style.verticalAlign]="'top'">
-                <i18n>address</i18n>
-              </td>
-              <td>
-                  {{ item.address.street }}
-                  {{ item.address.houseNumber }}
-                  <br>
-                  {{ item.address.postalCode }}
-                  {{ item.address.place }}
-                  {{ item.address.suburb.label }}
-              </td>
-            </tr>
-            <ng-container *ngIf="item.phone">
-              <tr>
-                <td><i18n>phone</i18n></td>
-                <td>
-                  <a mat-button target="_blank" [href]="'tel:' + item.phone">
-                    <fa-icon icon="phone"></fa-icon>
-                    {{ item.phone }}
-                  </a>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="item.mail">
-              <tr>
-                <td><i18n>email</i18n></td>
-                <td>
-                  <a mat-button target="_blank" [href]="'mailto:' + item.mail">
-                    <fa-icon icon="envelope"></fa-icon>
-                    {{ item.mail }}
-                  </a>
-                </td>
-              </tr>
-            </ng-container>
-            <tr>
-              <td><i18n>category</i18n></td>
-              <td>
-                <mat-chip-list>
-                  <mat-chip
-                    class="mat-body"
-                    [queryParams]="{ categories: item.category.id }"
-                    [routerLink]="['/', 'activities']"
-                    [style.borderColor]="item.category.color">
-                    {{ item.category.label }}
-                  </mat-chip>
-                </mat-chip-list>
-              </td>
-            </tr>
-            <tr>
-              <td><i18n>suburb</i18n></td>
-              <td>
-                <a mat-button
-                  [queryParams]="{ suburbs: item.address.suburb.id }"
-                  [routerLink]="['/', 'activities']">
-                  <fa-icon icon="city"></fa-icon>
-                  {{ item.address.suburb.label }}
-                </a>
-              </td>
-            </tr>
-            <ng-container *ngIf="item.targetGroups?.length">
-              <tr>
-                <td><i18n>targetGroups</i18n></td>
-                <td>
-                  <ng-container *ngFor="let targetGroup of item.targetGroups">
-                    <a mat-button
-                      [queryParams]="{ targetgroups: targetGroup.id }"
-                      [routerLink]="['/', 'activities']">
-                      <fa-icon icon="users"></fa-icon>
-                      {{ targetGroup.label }}
-                    </a>
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-          </table>
-        </mat-expansion-panel>
-        <ng-container *ngIf="item.images">
-          <mat-expansion-panel #images (opened)="expanded(images)">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <fa-icon icon="image"></fa-icon>
-                <i18n>images</i18n>
-                <small>({{ item.images.length }})</small>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngFor="let image of item.images">
-              <figure>
-                <img
-                  src="data:image/svg+xml,
-                    %3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
-                  [alt]="image.label"
-                  [style.backgroundImage]="image.source"
-                  [title]="image.label">
-              </figure>
-            </ng-container>
-          </mat-expansion-panel>
-        </ng-container>
-        <ng-container *ngIf="item.schedules">
-          <mat-expansion-panel #schedules (opened)="expanded(schedules)">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <fa-icon icon="history"></fa-icon>
-                <i18n>schedules</i18n>
-                <small>({{ item.schedules.length }})</small>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <section>
-              <mat-calendar
-                [dateFilter]="dateFilter"
-                [startAt]="startAt"
-                (click)="click($event)"
-                (selectedChange)="select($event)">
-              </mat-calendar>
-              <mat-divider></mat-divider>
-              <aside>
-                <ng-container *ngIf="schedule">
-                  <i18n>selectedSchedule</i18n>
-                  <time>{{ schedule.datetime }}</time>
-                </ng-container>
-                <ng-container *ngIf="!schedule">
-                  <i18n>nextSchedule</i18n>
-                  <time>{{ item.scheduled?.datetime }}</time>
-                </ng-container>
-              </aside>
-            </section>
-          </mat-expansion-panel>
-        </ng-container>
-        <mat-expansion-panel #mapview (opened)="expanded(mapview)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <fa-icon icon="globe"></fa-icon>
-              <i18n>mapview</i18n>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <iframe #frame [src]="source"></iframe>
-        </mat-expansion-panel>
-        <mat-expansion-panel #organisation (opened)="expanded(organisation)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <fa-icon icon="at"></fa-icon>
-              <i18n>organisation</i18n>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <organisation-card [item]="item.organisation"></organisation-card>
-        </mat-expansion-panel>
-        <ng-container *ngIf="item.blogposts">
-          <mat-expansion-panel #blogposts (opened)="expanded(blogposts)">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <fa-icon icon="at"></fa-icon>
-                <i18n>blogposts</i18n>
-                <small>({{ item.blogposts.length }})</small>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngFor="let blogpost of item.blogposts">
-              <blogpost-card [item]="blogpost"></blogpost-card>
-            </ng-container>
-          </mat-expansion-panel>
-        </ng-container>
-      </aside>
     </section>
   </div>
 
@@ -248,17 +69,20 @@
     <p class="title"><i18n>ort</i18n></p>
     <div class="info">
       <div class="image">
-        <img src="images/soccer-ball-on-field.jpg" alt="Location image">
+        <img *ngIf="item.images" [src]="item.images[0]" alt="Location image">
       </div>
       <div class="content">
-        <p class="name">sportplatz wacker dinslkaen</p>
+        <p class="name">{{ item.label }}</p>
         <p class="text">
           <fa-icon [icon]="['fas', 'map-marker-alt']" class="icon"></fa-icon>
-          Beethovenstrabe 6, 565656 dinslkaen
+          {{ item.address.street }}
+          {{ item.address.houseNumber }},
+          {{ item.address.postalCode }}
+          {{ item.address.place }}
         </p>
         <p class="text">
           <fa-icon [icon]="['fas', 'phone-alt']" class="icon"></fa-icon>
-          020641 34556
+          {{ item.phone }}
         </p>
       </div>
     </div>
@@ -268,24 +92,58 @@
     <p class="title"><i18n>veranstalter:in</i18n></p>
     <div class="info">
       <div class="image">
-        <img src="images/soccer-ball-on-field.jpg" alt="Organizer image">
+        <img *ngIf="item.organisation.images" [src]="item.organisation.images[0]" alt="Organizer image">
       </div>
       <div class="content">
-        <p class="name">Forderkreis ND-Jugendzentrum Dinslaken e.V.</p>
+        <p class="name">{{ item.organisation.label }}</p>
         <p class="text">
           <fa-icon [icon]="['fas', 'map-marker-alt']" class="icon"></fa-icon>
-          Beethovenstrabe 6, 565656 dinslkaen
+          {{ item.organisation.address.street }}
+          {{ item.organisation.address.houseNumber }},
+          {{ item.organisation.address.postalCode }}
+          {{ item.organisation.address.place }}
         </p>
         <p class="text">
           <fa-icon [icon]="['fas', 'phone-alt']" class="icon"></fa-icon>
-          020641 34556
+          {{ item.organisation.phone }}
         </p>
         <p class="text">
           <fa-icon [icon]="['fas', 'globe-americas']" class="icon"></fa-icon>
-          ndjuejej.com
+          {{ item.organisation.website }}
         </p>
       </div>
     </div>
+  </div>
+
+  <div class="other-events">
+    <p class="events-title">weitere events</p>
+    <div class="pull-left">
+      <fa-icon [icon]="['fas', 'chevron-left']" (click)="scrollLeft()"></fa-icon>
+    </div> 
+    <div #widgetsContent class="cards-container">
+      <mat-card class="events-card" *ngFor="let dummy of ' '.repeat(10).split(''), let x = index">
+        <like-piece class="like-piece" [item]="item" styleDisplay="block"></like-piece>
+        <div class="card-image">
+          <img *ngIf="item.images" mat-card-image [src]="item.images[0]" alt="Card Image">
+        </div>
+        <mat-card-content>
+          <p class="card-title">
+            tag der trinkhalle
+          </p>
+          <div class="card-content">
+            <span>10.12.21</span>
+            <mat-chip class="category" selected>essent&trinken</mat-chip>
+          </div>
+          <div class="card-content">
+            <span>ort</span>
+            <span>eintritt frei</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="pull-right">
+      <fa-icon [icon]="['fas', 'chevron-right']" (click)="scrollRight()"></fa-icon>
+      </div>
   </div>
   
 </main>

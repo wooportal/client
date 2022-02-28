@@ -1,5 +1,8 @@
 <button mat-button
-  (click)="like()">
+  (click)="like()"
+  [class.inline]="styleDisplay === 'inline'"
+  [class.block]="styleDisplay === 'block'"
+  >
   <fa-icon [icon]="[icon,'heart']" class="favorite-icon"></fa-icon>
   <span class="favorite-count">{{ item.likes ? item.likes : 0 }}</span>
 </button>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IconPrefix } from '@fortawesome/fontawesome-svg-core';
 import { Observable } from 'rxjs';
 import { StringPrimitive as String } from '../../../../api/models/string-primitive';
@@ -13,6 +13,7 @@ import { BasePiece } from '../base.piece';
 
 export class LikePieceComponent
   extends BasePiece implements OnInit {
+    @Input() styleDisplay: string = 'block';
     icon: IconPrefix = 'far';
 
   public constructor(

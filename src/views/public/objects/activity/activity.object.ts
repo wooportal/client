@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Type, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, Type, ViewChild } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -52,6 +52,8 @@ export class ActivityObjectComponent
       : new Date();
   }
 
+  @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
+
   public constructor(
     private dateAdapter: DateAdapter<Date>,
     private sanitizer: DomSanitizer,
@@ -59,7 +61,8 @@ export class ActivityObjectComponent
     metatagService: MetatagService,
     platformProvider: PlatformProvider,
     route: ActivatedRoute,
-    router: Router
+    router: Router,
+    private renderer: Renderer2
   ) {
     super(router, platformProvider, metatagService, route);
   }
@@ -78,18 +81,6 @@ export class ActivityObjectComponent
 
   public ngAfterViewInit(): void {
     super.ngAfterViewInit();
-
-    if (this.platformProvider.name !== 'server') {
-      const main = this.platformProvider.document.defaultView;
-      const frame = this.frame.nativeElement.contentWindow;
-
-      this.connection = new MapsConnection(main, frame);
-      this.connection.route.subscribe((r) => this.router.navigateByUrl(r));
-      this.connection.ready.pipe(filter(Boolean)).subscribe(() =>
-        this.connection.nextItems([this.item]));
-
-      this.connection.nextReady(true);
-    }
   }
 
   public click(event: Event): void {
@@ -107,6 +98,14 @@ export class ActivityObjectComponent
   private match(date: Date): ScheduleModel {
     return this.item.schedules.find((schedule) =>
       !(schedule.start.setHours(0, 0, 0, 0).valueOf() - date.valueOf()));
+  }
+
+  public scrollRight(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 150), behavior: 'smooth' });
+  }
+
+  public scrollLeft(): void {
+    this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft - 150), behavior: 'smooth' });
   }
 
 }
