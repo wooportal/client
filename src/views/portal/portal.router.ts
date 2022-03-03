@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { ConfigurationModel, CrudJoiner, CrudResolver, StaticPageModel } from '../../core';
 import { CommunityComponent } from './community/community.component';
-import { CommunityFormComponent } from './community/community.form';
 import { CommunityListingComponent } from './community/community.listing';
 import { EventsComponent } from './events/events.component';
 import { EventsListingComponent } from './events/events.listing';
@@ -18,7 +17,7 @@ const routes: Route[] = [
     path: '',
     children: [
       CommunityComponent.routing,
-      CommunityFormComponent.routing,
+      // CommunityFormComponent.routing,
       CommunityListingComponent.routing,
       EventsComponent.routing,
       EventsListingComponent.routing,
