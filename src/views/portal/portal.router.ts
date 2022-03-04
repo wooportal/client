@@ -9,6 +9,7 @@ import { FavoritesListingComponent } from './favorites/favorites.listing';
 import { IndexComponent } from './index/index.component';
 import { MapComponent } from './map/map.component';
 import { PortalComponent } from './portal.component';
+import { RegisterPageComponent } from './register/register.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 import { StaticPageComponent } from './static-page/static-page.component';
 
@@ -26,6 +27,7 @@ const routes: Route[] = [
       MapComponent.routing,
       // RegisterComponent.routing,
       // SearchComponent.routing,
+      RegisterPageComponent.routing,
       SitemapComponent.routing,
       StaticPageComponent.routing
     ]
