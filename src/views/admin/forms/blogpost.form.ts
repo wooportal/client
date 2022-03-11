@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { BlogpostModel, BlogpostProvider, Box, TokenProvider, TopicModel, TranslationProvider } from '../../../core';
+import { BlogpostModel, BlogpostProvider, Box, CoreSettings, TokenProvider, TopicModel, TranslationProvider } from '../../../core';
 import { BaseForm, FormField } from '../base/base.form';
 import { EditorFieldComponent } from '../fields/editor.field';
 import { ImageFieldComponent } from '../fields/image.field';
@@ -29,13 +29,24 @@ import { SelectFieldComponent } from '../fields/select.field';
         </ng-container>
       </ng-container>
     </ng-template>
-  `)
+  `,`
+  <ng-container *ngIf="superuser | async">
+    <ng-container *ngSwitchCase="'author'">
+      <i18n>author</i18n>
+    </ng-container>
+  </ng-container>
+`)
 })
 
 export class BlogpostFormComponent
   extends BaseForm<BlogpostModel> {
 
   public fields: FormField[] = [
+    {
+      name: 'author',
+      input: InputFieldComponent,
+      locked: true
+    },
     {
       name: 'title',
       input: InputFieldComponent,
@@ -62,9 +73,19 @@ export class BlogpostFormComponent
 
   public model: Type<BlogpostModel> = BlogpostModel;
 
+  public get author(): string {
+    return this.item.author;
+  }
+
+
+  public get superuser(): Observable<boolean> {
+    return this.tokenProvider.value.pipe(map((t) => t.access.superuser));
+  }
+
   public constructor(
     private blogpostProvider: BlogpostProvider,
     route: ActivatedRoute,
+    private settings: CoreSettings,
     tokenProvider: TokenProvider,
     translationProvider: TranslationProvider
   ) {
@@ -77,6 +98,31 @@ export class BlogpostFormComponent
     return super.persist().pipe(
       mergeMap((item) => this.tokenProvider.refresh().pipe(map(() => item)))
     );
+    //return this.superuser.pipe(take(1), mergeMap((su) => super.persist(!su)));
+
+  }
+
+  // public ngPostInit(): void {
+  //   console.log(this.author);
+  //   if(this.superuser) {
+  //     this.group.controls['author'].enable();
+  //   }
+  // }
+
+  protected ngPostInit(): void {
+
+    if(this.superuser){
+      Object.assign(this.fields.find((field) => field.name === 'author'), {
+        locked: false,
+        value: this.author
+      });
+    } else {
+      Object.assign(this.fields.find((field) => field.name === 'author'), {
+        locked: true,
+        value: this.author
+      });
+    }
+
   }
 
   protected cascade(item: BlogpostModel): Observable<any> {
@@ -98,6 +144,14 @@ export class BlogpostFormComponent
     }
 
     return forkJoin([super.cascade(item), ...links]).pipe(map((i) => i[0]));
+  }
+
+  public fillUserData(){
+    // this.blogpostProvider.readOne(this.token.id).subscribe((user) => {
+    //   this.group.get('contactName').patchValue(user.name);
+    //   this.group.get('mail').patchValue(user.username);
+    //   this.group.get('phone').patchValue(user.phone);
+    // });
   }
 
 }
